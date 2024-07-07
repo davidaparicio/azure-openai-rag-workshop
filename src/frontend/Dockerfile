@@ -14,13 +14,13 @@ RUN npm run build
 
 # Run Vite app
 # ------------------------------------
-# FROM nginx:alpine
-# COPY --from=build /app/dist /usr/share/nginx/html
-# EXPOSE 8000
-# CMD ["nginx", "-g", "daemon off;"]
-FROM busybox:stable-musl
-RUN adduser -D static
-USER static
-WORKDIR /home/static
-COPY --from=build /app/dist .
-CMD ["busybox", "httpd", "-f", "-v", "-p", "8080"]
+FROM nginx:alpine
+COPY --from=build /app/src/frontend/dist /usr/share/nginx/html
+EXPOSE 8000
+CMD ["nginx", "-g", "daemon off;"]
+#FROM busybox:stable-musl
+#RUN adduser -D static
+#USER static
+#WORKDIR /home/static
+#COPY --from=build /app/src/frontend/dist .
+#CMD ["busybox", "httpd", "-f", "-v", "-p", "8080"]
